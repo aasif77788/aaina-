@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Aaina 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --purple:#7c3aed;
+      --gold:#ffd700;
+      --white:#ffffff;
+    }
+    body{
+      font-family:'Poppins',sans-serif;
+      background:radial-gradient(circle at top,#2e1065,#020617 60%);
+      color:var(--white);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+    #loader{
+      position:fixed;inset:0;z-index:999;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#581c87,#1e293b,#0f172a);
+      animation:pulseBg 2s infinite;
+    }
+    #loader h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.4rem,7vw,4rem);
+      background:linear-gradient(120deg,var(--gold),#facc15);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 20px rgba(250,204,21,.5);
+      margin-bottom:.75rem;
+    }
+    #loader p{opacity:.9;font-size:.95rem}
+    @keyframes pulseBg{0%,100%{opacity:1}50%{opacity:.85}}
+    #particles-js{position:fixed;inset:0;z-index:-1}
+    #musicBtn{
+      position:fixed;top:16px;right:16px;z-index:50;
+      padding:8px 18px;border-radius:30px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(15,23,42,.55);
+      backdrop-filter:blur(16px);
+      font-size:.85rem;cursor:pointer;
+      display:flex;align-items:center;gap:.35rem;
+      transition:.25s;
+    }
+    #musicBtn.playing{
+      background:linear-gradient(120deg,var(--gold),#f59e0b);
+      color:#111827;box-shadow:0 0 18px rgba(250,204,21,.65);
+    }
+    section{padding:80px 18px;max-width:1100px;margin:0 auto;position:relative}
+    h2.sec-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,5vw,3.1rem);
+      text-align:center;margin-bottom:32px;
+      background:linear-gradient(120deg,var(--gold),#e5e7eb);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .glass{
+      background:rgba(15,23,42,.8);
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,.35);
+      box-shadow:0 20px 60px rgba(15,23,42,.7);
+      backdrop-filter:blur(18px);
+    }
+    #hero{
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;padding-top:110px;padding-bottom:70px;
+    }
+    #hero-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.9rem,9vw,4.8rem);
+      background:linear-gradient(120deg,var(--gold),#fde68a,#facc15);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      text-shadow:0 0 25px rgba(234,179,8,.6);
+      margin-bottom:12px;animation:floatTitle 6s ease-in-out infinite;
+    }
+    @keyframes floatTitle{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    #hero-sub{font-size:clamp(1.1rem,3.3vw,1.5rem);opacity:.92;margin-bottom:26px}
+    .profile-wrap{margin-top:10px;position:relative}
+    .profile-photo{
+      width:min(260px,70vw);aspect-ratio:9/16;
+      border-radius:24px;overflow:hidden;
+      border:4px solid rgba(250,204,21,.7);
+      box-shadow:0 22px 45px rgba(15,23,42,.8);
+      transform:rotate(-2deg);transition:.35s;
+    }
+    .profile-photo img{width:100%;height:100%;object-fit:cover}
+    .profile-photo:hover{transform:rotate(-2deg) scale(1.03)}
+    .profile-tag{
+      position:absolute;bottom:-18px;right:12px;
+      padding:7px 16px;border-radius:999px;
+      background:linear-gradient(120deg,#22c55e,#a3e635);
+      color:#052e16;font-size:.8rem;font-weight:600;
+      box-shadow:0 10px 25px rgba(22,163,74,.65);
+    }
+    .hero-badges{
+      display:flex;flex-wrap:wrap;justify-content:center;
+      gap:10px;margin-top:32px;
+    }
+    .chip{
+      padding:6px 14px;border-radius:999px;
+      border:1px solid rgba(148,163,184,.7);
+      background:rgba(15,23,42,.85);
+      font-size:.75rem;opacity:.9;
+    }
+    .wishes-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+    .wish-card{
+      padding:18px 18px 20px;border-radius:20px;position:relative;
+      overflow:hidden;
+      background:radial-gradient(circle at top left,rgba(250,204,21,.16),rgba(15,23,42,.96));
+      border:1px solid rgba(148,163,184,.5);transition:.25s;
+    }
+    .wish-card::before{
+      content:'';position:absolute;inset:-40%;opacity:0;
+      background:conic-gradient(from 0deg,var(--gold),#a855f7,#0ea5e9,var(--gold));
+      transition:.4s;filter:blur(18px);
+    }
+    .wish-inner{position:relative;z-index:1}
+    .wish-emoji{font-size:1.9rem;margin-bottom:6px}
+    .wish-text{font-size:.95rem;line-height:1.4}
+    .wish-card:hover{transform:translateY(-6px);border-color:var(--gold)}
+    .wish-card:hover::before{opacity:.45}
+    .mem-wrap.glass{padding:18px}
+    .carousel{position:relative;overflow:hidden;border-radius:18px}
+    .carousel-track{display:flex;transition:transform .5s ease}
+    .slide{min-width:100%;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .memory-shot{
+      width:100%;border-radius:18px;overflow:hidden;
+      border:3px solid rgba(248,250,252,.3);
+      box-shadow:0 18px 40px rgba(15,23,42,.8);
+    }
+    .memory-shot img{width:100%;display:block;object-fit:cover}
+    .mem-caption{font-size:.9rem;opacity:.95;text-align:center}
+    .car-btn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:34px;height:34px;border-radius:999px;border:none;
+      background:rgba(15,23,42,.75);color:white;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;box-shadow:0 10px 25px rgba(15,23,42,.9);
+      font-size:1.3rem;
+    }
+    .car-btn.left{left:6px}.car-btn.right{right:6px}
+    .poem-box{max-width:640px;margin:0 auto;padding:26px 18px 30px;text-align:center}
+    .poem-line{
+      margin-bottom:14px;font-size:1.05rem;
+      opacity:0;transform:translateY(20px);
+      animation:lineIn .7s forwards;
+    }
+    .poem-line:nth-child(1){animation-delay:.15s}
+    .poem-line:nth-child(2){animation-delay:.35s}
+    .poem-line:nth-child(3){animation-delay:.55s}
+    .poem-line:nth-child(4){animation-delay:.75s}
+    @keyframes lineIn{to{opacity:1;transform:translateY(0)}}
+    .count-wrap{text-align:center}
+    .circle-age{
+      width:190px;height:190px;margin:18px auto 10px;
+      border-radius:50%;
+      background:conic-gradient(from 220deg,#22c55e,var(--gold),#a855f7,#22c55e);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 40px rgba(168,85,247,.65);
+      animation:spinCircle 8s linear infinite;
+    }
+    .circle-inner{
+      width:82%;height:82%;border-radius:inherit;
+      background:radial-gradient(circle at top,#0f172a,#020617);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+    }
+    .age-num{font-family:'Playfair Display',serif;font-size:3.4rem}
+    .age-label{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+    @keyframes spinCircle{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .count-text{font-size:.9rem;opacity:.9;margin-top:10px}
+    .timer{display:flex;justify-content:center;gap:14px;margin-top:18px;font-size:.85rem}
+    .timer span{
+      padding:6px 10px;border-radius:12px;
+      background:rgba(15,23,42,.85);
+      border:1px solid rgba(148,163,184,.6);
+    }
+    .final.glass{padding:26px 18px 30px;margin-bottom:70px;text-align:center}
+    .final h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:10px}
+    .note-main{font-size:.98rem;line-height:1.5;margin-bottom:18px}
+    .fun-line{font-size:.95rem;margin-top:4px}
+    .fun-line strong{color:#fbbf24}
+    .share-row{
+      display:flex;flex-wrap:wrap;justify-content:center;
+      gap:10px;margin-top:12px;
+    }
+    .btn-pill{
+      padding:9px 15px;border-radius:999px;border:none;
+      font-size:.82rem;display:flex;align-items:center;gap:6px;
+      cursor:pointer;text-decoration:none;color:white;transition:.2s;
+    }
+    .btn-wa{background:#22c55e}
+    .btn-ig{background:linear-gradient(120deg,#ec4899,#f97316,#fde047)}
+    .btn-dl{background:linear-gradient(120deg,var(--gold),#f97316);color:#111827}
+    .btn-pill:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(15,23,42,.85)}
+    @media (max-width:768px){
+      section{padding:70px 14px}
+      #hero{padding-top:100px}
+      .profile-photo{width:78vw}
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <h1>Loading Aaina Magic ✨</h1>
+    <p>Thoda sa wait kar, website teri vibe pe set ho rahi hai...</p>
+  </div>
+
+  <div id="particles-js"></div>
+
+  <button id="musicBtn">🎵 Music Off</button>
+  <audio id="bgMusic" loop>
+    <source src="https://www.chosic.com/wp-content/uploads/2021/12/happy-birthday-jazz-193249.mp3" type="audio/mpeg" />
+  </audio>
+
+  <section id="hero">
+    <h1 id="hero-title">HAPPY BIRTHDAY AAINA! 🎉</h1>
+    <p id="hero-sub">Aaina, tu hamesha special rahegi ✨</p>
+
+    <div class="profile-wrap">
+      <div class="profile-photo">
+        <!-- yahi naam tumhare folder ka hai -->
+        <img src="IMG_20251206_201907_042.jpg" alt="Aaina beautiful birthday photo" />
+      </div>
+      <div class="profile-tag">Sunshine mode: ON 🌞</div>
+    </div>
+
+    <div class="hero-badges">
+      <span class="chip">Best smile in the squad 😎</span>
+      <span class="chip">Chat queen + emoji struggler 😂</span>
+      <span class="chip">Rule breaker admin energy 💫</span>
+    </div>
+  </section>
+
+  <section id="wishes">
+    <h2 class="sec-title">Dil se likhe wishes 💌</h2>
+    <div class="wishes-grid">
+      <div class="wish-card"><div class="wish-inner"><div class="wish-emoji">❤️</div><p class="wish-text">“Aaina, teri smile har din ko sundar bana deti hai 🌟”</p></div></div>
+      <div class="wish-card"><div class="wish-inner"><div class="wish-emoji">🎈</div><p class="wish-text">“Aaina, yeh saal tere sapno ka saal hoga ✨”</p></div></div>
+      <div class="wish-card"><div class="wish-inner"><div class="wish-emoji">⭐</div><p class="wish-text">“Tu meri sabse achi dost hai, hamesha rahegi 💕”</p></div></div>
+      <div class="wish-card"><div class="wish-inner"><div class="wish-emoji">🎁</div><p class="wish-text">“Aaina, tu deserve karti hai sabse zyada khushi 🌍”</p></div></div>
+    </div>
+  </section>
+
+  <section id="memories">
+    <h2 class="sec-title">Humari crazy chats 📱</h2>
+    <div class="mem-wrap glass">
+      <div class="carousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="slide">
+            <div class="memory-shot">
+              <img src="Screenshot_20240530_134308.jpg" alt="Funny chat screenshot 1" />
+            </div>
+            <p class="mem-caption">Yeh pal hamesha yaad rahega 📸 – “Ewww kitne cringe log h...” moment 😂</p>
+          </div>
+          <div class="slide">
+            <div class="memory-shot">
+              <img src="Screenshot_20240609_180045.jpg" alt="Emoji confusion chat screenshot" />
+            </div>
+            <p class="mem-caption">Emoji nahi dikh raha tha, but hamari bonding clear dikh rahi thi 😆</p>
+          </div>
+          <div class="slide">
+            <div class="memory-shot">
+              <img src="Screenshot_20240628_201141.jpg" alt="Rules todne wale chat screenshot" />
+            </div>
+            <p class="mem-caption">“Rules hote hi todne ke liye hai” – classic Aaina admin dialogue 🤝</p>
+          </div>
+        </div>
+        <button class="car-btn left" id="prevSlide">‹</button>
+        <button class="car-btn right" id="nextSlide">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="poem">
+    <h2 class="sec-title">Chhota sa birthday poem ✨</h2>
+    <div class="poem-box glass">
+      <p class="poem-line">Teri muskan jaise sitaron ki chamak 🌙</p>
+      <p class="poem-line">Dil ko sukoon deti har baat 💖</p>
+      <p class="poem-line">Aaina tu hai anmol khazana 🎂</p>
+      <p class="poem-line">Janamdin mubarak, hamesha khush raha! ✨</p>
+    </div>
+  </section>
+
+  <section id="countdown">
+    <h2 class="sec-title">Agle adventure tak countdown ⏳</h2>
+    <div class="count-wrap">
+      <div class="circle-age">
+        <div class="circle-inner">
+          <div class="age-num" id="ageNumber">21</div>
+          <div class="age-label">Level Unlocked</div>
+        </div>
+      </div>
+      <p class="count-text">Next birthday tak kitna time? Chalo geek mode on karte hain ⏰</p>
+      <div class="timer" id="timerRow">
+        <span id="tDays">00D</span>
+        <span id="tHours">00H</span>
+        <span id="tMin">00M</span>
+        <span id="tSec">00S</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="final">
+    <div class="final glass">
+      <h3>Heartfelt Note 💖</h3>
+      <p class="note-main">
+        Aaina – yeh poori website sirf tere liye bani hai. Tu online ho ya offline,
+        har jagah vibe leke aati hai. Tu hamesha meri achi dost rahegi,
+        chahe kitne bhi “emoji nahi dikhra” moments aaye. Happy Birthday! 🥳
+      </p>
+      <p class="fun-line">
+        Aur haan, <strong>agar kabhi udaas lage na</strong>, to yeh site khol ke dekh lena –
+        yaad aa jayega ki koi pagal sa dost hai jo tujhe itna lamba HTML likh ke wish karta hai 😜
+      </p>
+      <p class="fun-line">
+        Life rule: <strong>Assignments baad me, Aaina ka birthday pehle</strong>. Server down ho sakta hai,
+        lekin hamari dosti kabhi offline nahi hoti 💻❤️
+      </p>
+      <div class="share-row">
+        <a class="btn-pill btn-wa" target="_blank"
+           href="https://wa.me/?text=Aaina%20ka%20custom%20birthday%20website%20dekho%20%E2%9C%A8">
+          📲 WhatsApp pe bhej
+        </a>
+        <a class="btn-pill btn-ig" target="_blank"
+           href="https://www.instagram.com/">
+          📸 Story pe flex kar
+        </a>
+        <button class="btn-pill btn-dl" id="dlBtn">💾 Page save kar lo</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        confetti({particleCount:160,spread:70,origin:{y:0.6}});
+      }, 1800);
+    });
+
+    particlesJS('particles-js',{
+      particles:{number:{value:70},
+        color:{value:['#a855f7','#facc15','#f97316']},
+        shape:{type:'circle'},opacity:{value:0.45},
+        size:{value:3,random:true},move:{speed:1.1}},
+      interactivity:{events:{onhover:{enable:true,mode:'repulse'}}}
+    });
+
+    const musicBtn=document.getElementById('musicBtn');
+    const bgMusic=document.getElementById('bgMusic');
+    musicBtn.addEventListener('click',()=>{
+      if(bgMusic.paused){
+        bgMusic.play();
+        musicBtn.classList.add('playing');
+        musicBtn.innerHTML='🎵 Music On';
+      }else{
+        bgMusic.pause();
+        musicBtn.classList.remove('playing');
+        musicBtn.innerHTML='🎵 Music Off';
+      }
+    });
+
+    const track=document.getElementById('carouselTrack');
+    const slides=document.querySelectorAll('.slide');
+    let index=0;
+    function updateSlide(){track.style.transform=`translateX(-${index*100}%)`;}
+    document.getElementById('nextSlide').onclick=()=>{index=(index+1)%slides.length;updateSlide();};
+    document.getElementById('prevSlide').onclick=()=>{index=(index-1+slides.length)%slides.length;updateSlide();};
+    setInterval(()=>{index=(index+1)%slides.length;updateSlide();},6000);
+
+    const nextDate=new Date(new Date().getFullYear()+1,0,1);
+    const dSpan=document.getElementById('tDays');
+    const hSpan=document.getElementById('tHours');
+    const mSpan=document.getElementById('tMin');
+    const sSpan=document.getElementById('tSec');
+    setInterval(()=>{
+      const now=new Date();
+      const diff=nextDate-now;
+      if(diff<=0)return;
+      const d=Math.floor(diff/1000/60/60/24);
+      const h=Math.floor(diff/1000/60/60)%24;
+      const m=Math.floor(diff/1000/60)%60;
+      const s=Math.floor(diff/1000)%60;
+      dSpan.textContent=d+'D';
+      hSpan.textContent=h.toString().padStart(2,'0')+'H';
+      mSpan.textContent=m.toString().padStart(2,'0')+'M';
+      sSpan.textContent=s.toString().padStart(2,'0')+'S';
+    },1000);
+
+    document.getElementById('dlBtn').addEventListener('click',()=>{
+      confetti({particleCount:200,spread:100});
+      alert('Download tip: Browser me menu → "Save Page As" karke .html file bana le, phir offline bhi chal jayega 🔥');
+    });
+  </script>
+</body>
+</html>
